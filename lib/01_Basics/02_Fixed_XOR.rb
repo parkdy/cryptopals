@@ -15,6 +15,20 @@ If your function works properly, then when you feed it the string:
   
 =end
 
-def fixed_xor(hex1, hex2)
-  (hex1.to_i(16) ^ hex2.to_i(16)).to_s(16)
+require_relative '01_Convert_hex_to_base64'
+
+module Challenge2
+  extend self
+
+  def fixed_xor(hex1, hex2)
+    bytes1 = Challenge1.hex_to_bytes(hex1)
+    bytes2 = Challenge1.hex_to_bytes(hex2)
+    
+    xor = ""
+    bytes1.each_with_index do |byte, index|
+      xor << (byte ^ bytes2[index]).to_s(16)
+    end
+
+    return xor
+  end
 end
