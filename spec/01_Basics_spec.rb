@@ -1,6 +1,7 @@
 require "01_Basics/01_Convert_hex_to_base64"
 require "01_Basics/02_Fixed_XOR"
 require "01_Basics/03_Single-byte_XOR_cipher"
+require "01_Basics/04_Detect_single-character_XOR"
 
 describe "Challenge1" do
   describe ".hex_to_base64" do
@@ -36,6 +37,28 @@ describe "Challenge3" do
 
       expect(key).to eq('X')
       expect(decrypted_message).to eq("Cooking MC's like a pound of bacon")
+    end
+  end
+end
+
+describe "Challenge4" do
+  describe ".detect_single_character_xor" do
+    it "should find the string that has been encrypted by single-byte xor" do
+      hex_strings = []
+
+      file = "#{File.dirname(__FILE__)}/data/4.txt"
+      File.readlines(file).each do |line|
+        hex_strings << line.chomp
+      end
+
+      best_candidate = Challenge4.detect_single_character_xor(hex_strings)
+      key = best_candidate[:key]
+      decrypted_message = best_candidate[:decrypted_message]
+      encrypted_message = best_candidate[:encrypted_message]
+
+      expect(key).to eq('5')
+      expect(decrypted_message.strip).to eq("Now that the party is jumping")
+      expect(encrypted_message).to eq("7b5a4215415d544115415d5015455447414c155c46155f4058455c5b523f")
     end
   end
 end

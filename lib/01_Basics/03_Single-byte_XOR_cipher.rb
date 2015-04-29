@@ -33,7 +33,7 @@ module Challenge3
       analyzer.analyze
       error = analyzer.error
 
-      candidates << { key: key, decrypted_message: decrypted_message, error: error }
+      candidates << { encrypted_message: hex, key: key, decrypted_message: decrypted_message, error: error }
     end
 
     sorted_candidates = candidates.sort_by{ |try| try[:error] }
